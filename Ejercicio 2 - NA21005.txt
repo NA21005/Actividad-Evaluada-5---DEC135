@@ -1,0 +1,41 @@
+section .data
+    num1 db 20
+    num2 db 2
+    msg db "La multiplicacion de los numeros es: "
+    len equ $ - msg
+
+section .bss
+    resultado resb 2
+
+section .text
+    global _start
+
+    _start:
+        mov al, [num1]
+        mov bl, [num2]
+        mul bl
+
+        mov bl, 10
+        div bl
+        
+        add ax, 30h
+        add dx, 30h
+        
+        mov [resultado], ax
+        mov [resultado+1], dx
+
+        mov eax, 4
+        mov ebx, 1
+        mov ecx, msg
+        mov edx, len
+        int 0x80
+    
+        mov eax, 4
+        mov ebx, 1
+        mov ecx, resultado
+        mov edx, 2
+        int 0x80
+        
+        mov eax,1
+        mov ebx,0
+        int 0x80

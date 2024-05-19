@@ -1,0 +1,42 @@
+section .data
+    num1 dw 101
+    num2 dw 50
+    num3 dw 11
+    msg dw "La resta de los numeros es: "
+    len equ $ - msg
+
+section .bss
+    resultado resw 4
+
+section .text
+    global _start
+
+    _start:
+        mov ax, [num1]
+        sub ax, [num2]
+        sub ax, [num3]
+        
+        mov cx, 10
+        div cx
+        
+        add ax, 30h
+        add dx, 30h
+        
+        mov [resultado], ax
+        mov [resultado+1], dx
+        
+        mov eax, 4
+        mov ebx, 1
+        mov ecx, msg
+        mov edx, len
+        int 0x80
+    
+        mov eax, 4
+        mov ebx, 1
+        mov ecx, resultado
+        mov edx, 2
+        int 0x80
+        
+        mov eax,1
+        mov ebx,0
+        int 0x80

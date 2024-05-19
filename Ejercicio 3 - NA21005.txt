@@ -1,0 +1,41 @@
+section .data
+    num1 dd 100
+    num2 dd 4
+    msg dd "La division de los numeros es: "
+    len equ $ - msg
+
+section .bss
+    resultado resd 1
+
+section .text
+    global _start
+
+    _start:
+        mov eax, [num1]
+        mov ebx, [num2]
+        div ebx 
+        
+        mov ecx, 10
+        div ecx
+        
+        add eax, 30h
+        add edx, 30h
+        
+        mov [resultado], eax
+        mov [resultado+1], edx
+
+        mov eax, 4
+        mov ebx, 1
+        mov ecx, msg
+        mov edx, len -1
+        int 0x80
+    
+        mov eax, 4
+        mov ebx, 1
+        mov ecx, resultado
+        mov edx, 2
+        int 0x80
+        
+        mov eax,1
+        mov ebx,0
+        int 0x80
